@@ -7,6 +7,8 @@ class _Menus extends ConsumerStatefulWidget {
     required this.direction,
     required this.mode,
     bool? draggable,
+    this.padding,
+    this.textStyle,
   })  : draggable = draggable ?? false,
         super(key: const ValueKey('_Menus'));
 
@@ -15,6 +17,9 @@ class _Menus extends ConsumerStatefulWidget {
   final PlutoLayoutTabMode mode;
 
   final bool draggable;
+
+  final EdgeInsets? padding;
+  final TextStyle? textStyle;
 
   @override
   ConsumerState<_Menus> createState() => _MenusState();
@@ -312,6 +317,8 @@ class _MenusState extends ConsumerState<_Menus> {
         layoutId: layoutId,
         item: item,
         toggleTab: toggleTab,
+        textStyle: widget.textStyle,
+        padding: widget.padding,
       );
 
       if (!widget.draggable) {
@@ -404,12 +411,17 @@ class _MenuContainer extends ConsumerWidget {
     required this.layoutId,
     required this.item,
     required this.toggleTab,
+    this.padding,
+    this.textStyle,
     super.key,
   });
 
   final PlutoLayoutId layoutId;
 
   final PlutoLayoutTabItem item;
+
+  final EdgeInsets? padding;
+  final TextStyle? textStyle;
 
   final void Function(
     PlutoLayoutTabItem item,
@@ -437,6 +449,8 @@ class _MenuContainer extends ConsumerWidget {
       child: ToggleButton(
         title: item.title,
         icon: item.icon,
+        padding: padding,
+        textStyle: textStyle,
         trailing: item.showRemoveButton
             ? IconButton(
                 iconSize: 14,

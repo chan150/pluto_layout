@@ -7,6 +7,8 @@ class ToggleButton extends StatelessWidget {
     this.icon,
     this.trailing,
     this.changed,
+    this.textStyle,
+    this.padding,
     super.key,
   });
 
@@ -20,6 +22,9 @@ class ToggleButton extends StatelessWidget {
 
   final void Function(bool)? changed;
 
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
+
   void onTap() {
     if (changed != null) changed!(!enabled);
   }
@@ -29,8 +34,7 @@ class ToggleButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     final style = TextButton.styleFrom(
-      foregroundColor:
-          enabled ? theme.colorScheme.secondary : theme.disabledColor,
+      foregroundColor: enabled ? theme.colorScheme.secondary : theme.disabledColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.zero,
       ),
@@ -44,13 +48,22 @@ class ToggleButton extends StatelessWidget {
 
     return icon != null
         ? TextButton.icon(
-            style: style,
+            style: style.copyWith(
+              textStyle: WidgetStatePropertyAll(textStyle),
+              padding: WidgetStatePropertyAll(padding),
+              minimumSize: WidgetStatePropertyAll(padding == null ? null : Size.zero),
+            ),
             icon: icon!,
             onPressed: onTap,
             label: label,
           )
         : TextButton(
-            style: style,
+            // style: style,
+            style: style.copyWith(
+              textStyle: WidgetStatePropertyAll(textStyle),
+              padding: WidgetStatePropertyAll(padding),
+              minimumSize: WidgetStatePropertyAll(padding == null ? null : Size.zero),
+            ),
             onPressed: onTap,
             child: label,
           );

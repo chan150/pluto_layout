@@ -36,6 +36,8 @@ class PlutoLayoutTabs extends ConsumerWidget {
     this.mode = PlutoLayoutTabMode.showOne,
     this.tabViewSizeResolver,
     bool? draggable,
+    this.padding,
+    this.textStyle,
     super.key,
   })  : items = _updateConstrains(items ?? [], mode),
         draggable = draggable ?? false,
@@ -51,6 +53,8 @@ class PlutoLayoutTabs extends ConsumerWidget {
         draggable = draggable ?? false,
         tabViewSizeResolver = null,
         _givenItemsProvider = true,
+        textStyle = null,
+        padding = null,
         _expanded = expanded;
 
   static List<PlutoLayoutTabItem> _updateConstrains(
@@ -128,6 +132,9 @@ class PlutoLayoutTabs extends ConsumerWidget {
 
   final bool _expanded;
 
+  final EdgeInsets? padding;
+  final TextStyle? textStyle;
+
   int _getTabsRotate(PlutoLayoutContainerDirection id) {
     switch (id) {
       case PlutoLayoutContainerDirection.top:
@@ -163,9 +170,7 @@ class PlutoLayoutTabs extends ConsumerWidget {
     final childrenRotate = _getTabsChildrenRotate(containerDirection);
 
     Widget rotateOrNot(int rotate, Widget child) {
-      return rotate == 0
-          ? child
-          : RotatedBox(quarterTurns: rotate, child: child);
+      return rotate == 0 ? child : RotatedBox(quarterTurns: rotate, child: child);
     }
 
     Widget expandedOrNot(bool expanded, Widget child) {
@@ -181,6 +186,8 @@ class PlutoLayoutTabs extends ConsumerWidget {
           direction: containerDirection,
           mode: mode,
           draggable: draggable,
+          textStyle: textStyle,
+          padding: padding,
         ),
       ),
       expandedOrNot(
@@ -233,8 +240,7 @@ class PlutoLayoutTabs extends ConsumerWidget {
 }
 
 class _TabsHelper {
-  static bool isEnabledTabView(PlutoLayoutTabItem e) =>
-      e.enabled && e.tabViewWidget != null;
+  static bool isEnabledTabView(PlutoLayoutTabItem e) => e.enabled && e.tabViewWidget != null;
 
   static bool isEnabled(PlutoLayoutTabItem e) => e.enabled;
 
@@ -244,8 +250,7 @@ class _TabsHelper {
     return ref.read(focusedLayoutIdProvider);
   }
 
-  static Object? getFocusedItemId(WidgetRef ref) =>
-      ref.read(_focusedItemIdViewProvider);
+  static Object? getFocusedItemId(WidgetRef ref) => ref.read(_focusedItemIdViewProvider);
 
   static void setFocus({
     required WidgetRef ref,
@@ -254,8 +259,7 @@ class _TabsHelper {
     ScrollController? scrollController,
     bool requestItemFocus = false,
   }) {
-    ref.read(focusedLayoutIdProvider.notifier).state =
-        layoutId ?? PlutoLayoutId.body;
+    ref.read(focusedLayoutIdProvider.notifier).state = layoutId ?? PlutoLayoutId.body;
 
     ref.read(_focusedItemIdViewProvider.notifier).state = item?.id;
 
@@ -309,6 +313,8 @@ enum PlutoLayoutTabMode {
   bool get isShowOneMode => isShowOne || isShowOneMust;
 
   bool get isShowOne => this == PlutoLayoutTabMode.showOne;
+
   bool get isShowOneMust => this == PlutoLayoutTabMode.showOneMust;
+
   bool get isShowSelected => this == PlutoLayoutTabMode.showSelected;
 }
