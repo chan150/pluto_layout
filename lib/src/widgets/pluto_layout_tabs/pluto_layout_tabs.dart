@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart' show StateNotifier, StateNotifierProvider, StateProvider;
 import 'package:pluto_layout/pluto_layout.dart';
 import 'package:pluto_layout/src/helper/resize_helper.dart';
 
