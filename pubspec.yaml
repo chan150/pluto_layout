@@ -5,8 +5,8 @@ homepage: https://pluto.weblaze.dev
 repository: https://github.com/bosskmk/pluto_layout
 
 environment:
-  sdk: '>=2.18.2 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=3.0.0<4.0.0'
+  flutter: ">=3.7.0"
 
 dependencies:
   flutter:
