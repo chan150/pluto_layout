@@ -7,7 +7,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart' show StateNotifier, StateNotifierProvider, StateProvider;
 import 'package:pluto_layout/pluto_layout.dart';
 import 'package:pluto_layout/src/helper/resize_helper.dart';
 
@@ -26,7 +25,17 @@ part 'pluto_layout_tab_item.dart';
 part 'pluto_layout_tab_item_size_resolver.dart';
 part 'pluto_layout_tabs_or_child.dart';
 
-final _focusedItemIdViewProvider = StateProvider<Object?>((ref) => null);
+class _FocusedItemIdViewNotifier extends Notifier<Object?> {
+  @override
+  Object? build() => null;
+
+  set state(Object? value) => super.state = value;
+}
+
+final _focusedItemIdViewProvider =
+    NotifierProvider<_FocusedItemIdViewNotifier, Object?>(
+  _FocusedItemIdViewNotifier.new,
+);
 
 /// You can configure the tab view by passing it as a child of [PlutoLayoutContainer].
 ///
@@ -233,7 +242,7 @@ class PlutoLayoutTabs extends ConsumerWidget {
         ? child
         : ProviderScope(
             overrides: [
-              _itemsProvider.overrideWith((ref) => _ItemsNotifier(items)),
+              _itemsProvider.overrideWith(() => _ItemsNotifier(items)),
             ],
             child: child,
           );

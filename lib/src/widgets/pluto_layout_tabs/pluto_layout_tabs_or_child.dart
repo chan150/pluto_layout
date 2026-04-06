@@ -22,7 +22,7 @@ class PlutoLayoutTabsOrChild extends StatelessWidget {
     return ProviderScope(
       overrides: [
         _itemsProvider.overrideWith(
-          (ref) => _ItemsNotifier(items ?? []),
+          () => _ItemsNotifier(items ?? []),
         ),
       ],
       child: Consumer(

@@ -1,7 +1,11 @@
 part of pluto_layout_tabs;
 
-class _ItemsNotifier extends StateNotifier<List<PlutoLayoutTabItem>> {
-  _ItemsNotifier(List<PlutoLayoutTabItem> items) : super(items);
+class _ItemsNotifier extends Notifier<List<PlutoLayoutTabItem>> {
+  final List<PlutoLayoutTabItem> initialValue;
+  _ItemsNotifier(this.initialValue);
+
+  @override
+  List<PlutoLayoutTabItem> build() => initialValue;
 
   PlutoLayoutTabItem? findById(Object id) {
     return state.firstWhereOrNull((e) => e.id == id);
@@ -60,6 +64,6 @@ class _ItemsNotifier extends StateNotifier<List<PlutoLayoutTabItem>> {
 }
 
 final _itemsProvider =
-    StateNotifierProvider<_ItemsNotifier, List<PlutoLayoutTabItem>>((ref) {
+    NotifierProvider<_ItemsNotifier, List<PlutoLayoutTabItem>>(() {
   return _ItemsNotifier([]);
 });

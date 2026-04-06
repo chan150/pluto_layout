@@ -1,6 +1,16 @@
 part of pluto_layout_tabs;
 
-final _draggingTabMenu = StateProvider<_DragData?>((ref) => null);
+class _DraggingTabMenuNotifier extends Notifier<_DragData?> {
+  @override
+  _DragData? build() => null;
+
+  set state(_DragData? value) => super.state = value;
+}
+
+final _draggingTabMenu =
+    NotifierProvider<_DraggingTabMenuNotifier, _DragData?>(
+  _DraggingTabMenuNotifier.new,
+);
 
 class _Menus extends ConsumerStatefulWidget {
   const _Menus({

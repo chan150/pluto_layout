@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart' show StateProvider;
 import 'package:pluto_layout/pluto_layout.dart';
 
 import 'pluto_layout_data.dart';
@@ -9,9 +8,17 @@ final layoutIdProvider = Provider<PlutoLayoutId>(
   (ref) => throw UnimplementedError(),
 );
 
+class FocusedLayoutIdNotifier extends Notifier<PlutoLayoutId> {
+  @override
+  PlutoLayoutId build() => PlutoLayoutId.body;
+
+  set state(PlutoLayoutId value) => super.state = value;
+}
+
 /// ID of [PlutoLayoutContainer] that currently has focus activated.
-final focusedLayoutIdProvider = StateProvider<PlutoLayoutId>(
-  (ref) => PlutoLayoutId.body,
+final focusedLayoutIdProvider =
+    NotifierProvider<FocusedLayoutIdNotifier, PlutoLayoutId>(
+  FocusedLayoutIdNotifier.new,
 );
 
 /// Layout information of [PlutoLayout].
